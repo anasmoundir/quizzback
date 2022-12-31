@@ -110,36 +110,10 @@ var questions =  [
           "the explication":"The AWS Acceptable Use Policy provides information regarding prohibited actions on the AWS infrastructure."
         }
     ]
-
-    // async function fetchdata()
-    // {
-    //   const response = await fetch('../src/question.json');
-    //   console.log(response)
-    // } 
-
-    // import data from '../src/question.json' assert { type: 'JSON' };
-    // console.log(data);
-    fetch("../src/question.json")
-    .then(response => response.json())
-    .then(jsonString => {
-      const data = JSON.parse(jsonString);
-      console.log(data[1].question);
-    });
-
-function displaywhen(){
-  document.getElementById('btnsub').style.display ="none";
-  document.querySelectorAll('.ques').forEach((item)=>{
-     item.addEventListener('change',function(){
-      document.getElementById('btnsub').style.display ="block";
-    })
-  })
-
-}
-
-
-
-
 const step= document.querySelector('.title-compo');
+
+
+
 const step2= document.getElementById('spacediv2');
 let  button = document.getElementById('btn');
 let buttondata = document.getElementById('btn-test');
@@ -158,7 +132,6 @@ valuecheck1 = document.getElementById('cb11');
  progressebar =document.getElementById('progressbar');
  correction = document.getElementById('correction');
 var  correct = 0;
-
 function reload()
 {
       window.location.reload();
@@ -191,10 +164,9 @@ var arr2 = [];
 
 function passTheNextquestion()
 {
-  displaywhen();
   initilizethe();
   let rna1 = ran.next();
-  p = thevalueofcheckedboxs();
+  let p = thevalueofcheckedboxs();
   arr.push(p);
   if(rna1.done)
   {
@@ -207,14 +179,13 @@ function passTheNextquestion()
       document.getElementById('resultat').innerHTML ="YOUR CORRECT ANSWERS ARE"+ " " +counter +"/10" ;
       for(let i=0; i<arr.length-1;i++)
       {
-        if(typeof arr[i] == "undefined")
-        {
-          arr[i] = "this is not a correct answer";
-        }
        document.getElementById('accually').innerHTML +=  i +" "+ `<p>${arr[i+1]}</p>`;
        document.getElementById('correct').innerHTML += i + " "+`<p>${arr2[i]}</p>`; 
        
       }
+
+     
+  
     }
     console.log(arr)
     console.log(arr2)
@@ -249,6 +220,8 @@ function passTheNextquestion()
       {
         document.getElementById('displayQA3').innerHTML +=  '<div>hello world</div>'
       }
+     
+
     }
 
 

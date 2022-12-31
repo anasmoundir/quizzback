@@ -4,8 +4,7 @@
     }
     @mixin for-tablet
     {
-      @media (max-width: 768px) {
-         @content; }
+      @media (max-width: 600px) { @content; }
     }
     @mixin for-desktop
     {
