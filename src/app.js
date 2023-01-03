@@ -1,33 +1,34 @@
-// 
-    // async function fetchdata()
-    // {
-    //   const response = await fetch('../src/question.json');
-    //   console.log(response)
-    // } 
 
-    // import data from '../src/question.json' assert { type: 'JSON' };
-    // console.log(data);
-
-    /////////////////////////////
- 
-      fetch("../src/question.json")
+      fetch("./src/question.json")
       .then(response => response.json())
       .then(jsonString => {
-        const data =  JSON.parse(jsonString);
-        console.log(data);
-        questions = data;
-        var ran = generator()
-        passTheNextquestion(ran,questions);
-        document.getElementById('btnsub').onclick = function(){
-
-          passTheNextquestion(ran,questions);
-        }
-
-
+      const data =  JSON.parse(jsonString);
+      questions = data;
+      var ran = generator()
+      passTheNextquestion(ran,questions);
+      document.getElementById('btnsub').onclick = function()
+      {
+      
+      passTheNextquestion(ran,questions);
+      if(wantedarray["arr"][9])
+      {
+      let params = new URLSearchParams();
+      for (let [key, value] of Object.entries(wantedarray)) 
+      {
+      params.append(key, value);
+      }
+      let url = "./src/checkthescore.php?" + params;
+      fetch(url, {
+        method: "GET"
+      }).then(response => {return response.text();}).then(data => {
+        console.log(data); 
       });
-    
-  
+      }
+    }
+  }
+      );
 
+  
 
 function displaywhen(){
   document.getElementById('btnsub').style.display ="none";
@@ -36,29 +37,33 @@ function displaywhen(){
       document.getElementById('btnsub').style.display ="block";
     })
   })
-
 }
 
 
-const step= document.querySelector('.title-compo');
-const step2= document.getElementById('spacediv2');
-let  button = document.getElementById('btn');
-let buttondata = document.getElementById('btn-test');
-let questiontitle = document.getElementById('questiontitle');
-var part = document.getElementById('displayQA').style.display ="none"; 
-document.getElementById('displayQA2').style.display = "none"
-document.getElementById('displayQA3').style.display = "none"
-answerquestion1= document.getElementById('cb1');
-answerquestion2 = document.getElementById('cb2');
-answerquestion3 = document.getElementById('cb3');
-answerquestion4 = document.getElementById('cb4');
-valuecheck1 = document.getElementById('cb11');
+ const step= document.querySelector('.title-compo');
+ const step2= document.getElementById('spacediv2');
+ let  button = document.getElementById('btn');
+ let buttondata = document.getElementById('btn-test');
+ let questiontitle = document.getElementById('questiontitle');
+ var part = document.getElementById('displayQA').style.display ="none"; 
+ document.getElementById('displayQA2').style.display = "none"
+ document.getElementById('displayQA3').style.display = "none"
+ answerquestion1= document.getElementById('cb1');
+ answerquestion2 = document.getElementById('cb2');
+ answerquestion3 = document.getElementById('cb3');
+ answerquestion4 = document.getElementById('cb4');
+ valuecheck1 = document.getElementById('cb11');
  valuecheck2 = document.getElementById('cb21') 
  valuecheck3 = document.getElementById('cb31');
  valuecheck4 = document.getElementById('cb41');
  progressebar =document.getElementById('progressbar');
  correction = document.getElementById('correction');
-var  correct = 0;
+ var  correct = 0;
+
+ var wantedarray = [];
+ wantedarray["arr"] =[];
+ wantedarray["arr2"] =[];
+
 
 function reload()
 {
@@ -95,12 +100,16 @@ function passTheNextquestion(ran,questions)
   displaywhen();
   initilizethe();
   let rna1 = ran.next();
+  console.log(rna1.value);
+
   p = thevalueofcheckedboxs();
-  arr.push(p);
+  wantedarray["arr"].push(p);
+  wantedarray["arr2"].push(rna1.value);
+
   if(rna1.done)
   {
     document.getElementById('spacediv3').style.backgroundColor = 'orange'
-    if(arr2[9])
+    if(arr[9])
     {
       getresult();
       document.getElementById('displayQA').style.display ="none"; 
@@ -114,20 +123,18 @@ function passTheNextquestion(ran,questions)
         }
        document.getElementById('accually').innerHTML +=  i +" "+ `<p>${arr[i+1]}</p>`;
        document.getElementById('correct').innerHTML += i + " "+`<p>${arr2[i]}</p>`; 
-       
       }
     }
     console.log(arr)
-    console.log(arr2)
   }
 
   fullthedata(rna1.value,questions)
   arr2.push(questions[rna1.value].correctAnswer);
-  console.log(answerquestion4.textContent);
+  // console.log(answerquestion4.textContent);
   position = rna1.value;
   progressebar.value = arr.length*10;
-  console.log(arr)
-  console.log(arr2)
+  console.log(wantedarray);
+
 }
 
 
@@ -146,9 +153,6 @@ function passTheNextquestion(ran,questions)
   }
 
 
-
-
-  
     function createresult()
     {
       let i =0;
@@ -157,8 +161,6 @@ function passTheNextquestion(ran,questions)
         document.getElementById('displayQA3').innerHTML +=  '<div>hello world</div>'
       }
     }
-
-
 
  var counter = 0;
 

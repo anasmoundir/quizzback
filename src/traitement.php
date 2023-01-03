@@ -28,7 +28,6 @@ foreach($data as $row)
     $questions[$row['id']]['answers'][] = $row['content_response'];
 }
 
-var_dump($questions);
 
 $questions_json = json_encode($questions);
 
@@ -38,7 +37,6 @@ $questions_json = json_encode($questions);
 $fp = fopen('./question.json','w');
     fwrite($fp, json_encode($questions_json));
     fclose($fp);
-
 
 
 
