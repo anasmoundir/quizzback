@@ -9,8 +9,6 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 catch(PDOException $e){}
 
 
-
-
 $arr =array();
 $arr1 = array();
 $positions = $_GET['arr'];
@@ -20,15 +18,16 @@ $thequestions = array();
 $arr1 = explode(",",$positions);
 
 
-
-if($arr)
+if($arr[9])
 {
       $savier = array();
       $m = arraydb($arr,$conn);
-      $k = arraycmp($m,$arr1);
-      
-  
+      // $k = arraycmp($m,$arr1);
+     print_r($arr);
+     print_r($m);
+     print_r($arr1);
 }
+
 function arraydb($arr,$conn)
 {
   $s = []; 
@@ -47,30 +46,24 @@ function arraydb($arr,$conn)
   return $s;
 }
 
-$i = 0;
+
 $count = 0;
 function arraycmp($m,$arr1)
 {     
+      $i = 0;
       while($i<count($m))
       {
-            if($arr1[$i] = $m[$i+1])
+            if($arr1[$i] == $m[$i+1])
             {
                   $count +=1;
             }
+            $i++;
       }
    return $count; 
 }
 
 
 // print_r($savier);
-
-    
-
-
-
-
-
-
 
 
 function countresult()
@@ -82,4 +75,12 @@ if((count($arr)) == 10)
 {
       countresult();
 }
+    
+
+
+
+
+
+
+
 
