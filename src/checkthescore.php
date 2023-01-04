@@ -17,15 +17,15 @@ $arr = explode(",",$result);
 $thequestions = array();
 $arr1 = explode(",",$positions);
 
-
-if($arr[9])
+if(count($arr) == 10)
 {
       $savier = array();
       $m = arraydb($arr,$conn);
-      // $k = arraycmp($m,$arr1);
-     print_r($arr);
-     print_r($m);
-     print_r($arr1);
+      $k = arraycmp($m,$arr1);
+      print_r($k);
+      // print_r($arr);
+      echo json_encode($m);
+//      print_r($arr1);
 }
 
 function arraydb($arr,$conn)
@@ -47,13 +47,12 @@ function arraydb($arr,$conn)
 }
 
 
-$count = 0;
 function arraycmp($m,$arr1)
-{     
+{     $count = 0;
       $i = 0;
-      while($i<count($m))
+      while($i<count($m)-1)
       {
-            if($arr1[$i] == $m[$i+1])
+            if($arr1[$i+1] == $m[$i])
             {
                   $count +=1;
             }
@@ -63,7 +62,7 @@ function arraycmp($m,$arr1)
 }
 
 
-// print_r($savier);
+
 
 
 function countresult()

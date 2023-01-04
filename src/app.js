@@ -10,6 +10,7 @@
       {
       
       passTheNextquestion(ran,questions);
+     
       if(wantedarray["arr"][9])
       {
       let params = new URLSearchParams();
@@ -21,9 +22,21 @@
       fetch(url, {
         method: "GET"
       }).then(response => {return response.text();}).then(data => {
-        console.log(data); 
+       
+        let dataArrays = data[0];
+        const array = data.split(',').map(item => item.replace(/^"|"$/g, ''));
+    
+        document.getElementById('displayQA').style.display ="none"; 
+        document.getElementById('displayQA3').style.display = "block";
+        document.getElementById('resultat').innerHTML ="YOUR CORRECT ANSWERS ARE"+ " " +dataArrays+"/10" ;
+        for(let i=0; i<wantedarray["arr"].length;i++)
+        {
+         document.getElementById('accually').innerHTML +=  i +" "+ `<p>${array[i]}</p>`;
+         document.getElementById('correct').innerHTML += i + " "+`<p>${wantedarray["arr"][i]}</p>`; 
+        }
       });
       }
+    
     }
   }
       );
@@ -92,8 +105,6 @@ var rna1;
 var compare ;
 var position = 0;
 var correctquestion = 0;
-var arr = [];
-var arr2 = [];
 
 function passTheNextquestion(ran,questions)
 {
@@ -108,37 +119,13 @@ function passTheNextquestion(ran,questions)
 
   if(rna1.done)
   {
-    document.getElementById('spacediv3').style.backgroundColor = 'orange'
-    if(arr[9])
-    {
-      getresult();
-      document.getElementById('displayQA').style.display ="none"; 
-      document.getElementById('displayQA3').style.display = "block";
-      document.getElementById('resultat').innerHTML ="YOUR CORRECT ANSWERS ARE"+ " " +counter +"/10" ;
-      for(let i=0; i<arr.length-1;i++)
-      {
-        if(typeof arr[i] == "undefined")
-        {
-          arr[i] = "this is not a correct answer";
-        }
-       document.getElementById('accually').innerHTML +=  i +" "+ `<p>${arr[i+1]}</p>`;
-       document.getElementById('correct').innerHTML += i + " "+`<p>${arr2[i]}</p>`; 
-      }
-    }
-    console.log(arr)
+    document.getElementById('spacediv3').style.backgroundColor = 'orange';
   }
-
   fullthedata(rna1.value,questions)
-  arr2.push(questions[rna1.value].correctAnswer);
-  // console.log(answerquestion4.textContent);
   position = rna1.value;
-  progressebar.value = arr.length*10;
+  progressebar.value = wantedarray["arr"].length*10;
   console.log(wantedarray);
-
-}
-
-
-
+  }
   function fullthedata(nah,questions)
   {
     questiontitle.textContent = questions[nah].question;
@@ -153,31 +140,7 @@ function passTheNextquestion(ran,questions)
   }
 
 
-    function createresult()
-    {
-      let i =0;
-      while( i <arr )
-      {
-        document.getElementById('displayQA3').innerHTML +=  '<div>hello world</div>'
-      }
-    }
-
  var counter = 0;
-
-  function getresult()
-  {
-      let i = 0;
-    while(i<arr.length +1)
-    {
-     
-      if(arr[i + 1] == arr2[i])
-      {
-        counter += 1;
-      }
-      i++;  
-    }
-  }
-
 
 var myvalue;
 function thevalueofcheckedboxs()
@@ -223,8 +186,6 @@ document.getElementById('displayQA2').style.display = "block"
       document.getElementById('btn').style.display = "none";
       document.getElementById('displayQA2').style.display = "none"
       document.getElementById('displayQA').style.display ="block"; 
-      passTheNextquestion();
-    
 }
 else if( document.getElementById('btn').style.display == "none" && step2.style.backgroundColor == 'yellow')
 {
@@ -234,4 +195,3 @@ else if( document.getElementById('btn').style.display == "none" && step2.style.b
       alert('insert you name please');
       }
 }
-function start(){}
